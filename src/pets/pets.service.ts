@@ -27,6 +27,13 @@ export class PetsService {
     return this.petsRepository.findOneOrFail();
   }
 
+  findByOwner(id: number): Promise<Pet[]> {
+    return this.petsRepository
+      .createQueryBuilder('pets')
+      .where('pets.owner = :id', { id })
+      .getMany();
+  }
+
   getOwner(ownerId: number): Promise<Owner> {
     return this.ownerService.findOne(ownerId);
   }
